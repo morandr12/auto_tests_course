@@ -1,9 +1,12 @@
+"""Модуль содержит PageObject BasePage"""
+
 import math
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
 
 
 class BasePage:
+    """Класс PageObject BasePage"""
 
     def __init__(self, browser: webdriver, url: str, timeout: int = 10):
         self.browser = browser
@@ -11,10 +14,12 @@ class BasePage:
         self.browser.implicitly_wait(timeout)
 
     def open(self):
+        """Открыть станицу."""
         self.browser.get(self.url)
         return self
 
     def is_element_present(self, how, what):
+        """Проверка существования локатора элемента."""
         try:
             self.browser.find_element(how, what)
         except NoSuchElementException:
@@ -22,6 +27,7 @@ class BasePage:
         return True
 
     def solve_quiz_and_get_code(self):
+        """Решить вопрос на alert (для Stepik)."""
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
         answer = str(math.log(abs((12 * math.sin(float(x))))))

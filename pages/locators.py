@@ -1,16 +1,21 @@
+"""Модуль содержит локаторы страниц."""
+
 from selenium.webdriver.common.by import By
 
 
 class MainPageLocators:
+    """Локаторы MainPage."""
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
 
 
 class LoginPageLocators:
+    """Локаторы LoginPage."""
     LOGIN_FORM = (By.CSS_SELECTOR, "#login_form")
     REGISTER_FORM = (By.CSS_SELECTOR, "#register_form")
 
 
 class ProductPageLocators:
+    """Локаторы ProductPage."""
     BTN_ADD_TO_BASKET = (By.CSS_SELECTOR, ".btn-add-to-basket")
     ALERT_SUCCESS = (By.CSS_SELECTOR, "div.alert-success")
     ALERT_SUCCESS_TXT = (By.CSS_SELECTOR, "div.alert-success > div.alertinner > strong")
