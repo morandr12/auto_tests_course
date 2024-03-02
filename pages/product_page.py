@@ -59,13 +59,17 @@ class ProductPage(BasePage):
         """Проверка равенства имени продукта и текста с именем продукта добавленного в корзину."""
         product_name = self.get_product_name()
         alert_success_text = self.get_alert_success_text()
-        assert product_name == alert_success_text, "product name not found in alert_success"
+        assert (
+            product_name == alert_success_text
+        ), f"product name = {product_name} is not equal in alert_success_text = {alert_success_text}"
 
     def check_product_price_added_to_basket(self):
         """Проверка равенства цены продукта и текста с ценой продукта добавленного в корзину."""
         product_price = self.get_product_price()
         alert_info_text = self.get_alert_info_text()
-        assert product_price == alert_info_text, "product price is not equal in alert_success"
+        assert (
+            product_price == alert_info_text
+        ), f"product price = {product_price}  is not equal in alert_info_text = {alert_info_text}"
 
     def check_product_added_to_basket(self):
         """Проверка равенства продукта и текста сообщения о продукте добавленном в корзину."""
