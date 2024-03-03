@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException, TimeoutException
+from .locators import BasePageLocators
 
 
 class BasePage:
@@ -20,7 +21,7 @@ class BasePage:
         self.browser.get(self.url)
         return self
 
-    def is_element_present(self, how, what):
+    def is_element_present(self, how: str, what: str):
         """Проверка существования локатора элемента."""
         try:
             self.browser.find_element(how, what)
@@ -28,7 +29,7 @@ class BasePage:
             return False
         return True
 
-    def is_not_element_present(self, how, what, timeout=4):
+    def is_not_element_present(self, how: str, what: str, timeout=4):
         """Проверка отсутствия локатора элемента."""
         try:
             WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
@@ -60,3 +61,13 @@ class BasePage:
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def go_to_login_page(self):
+        """Переход на страницу LoginPage"""
+        login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        login_link.click()
+        # return LoginPage(browser=self.browser, url=self.browser.current_url)
+
+    def should_be_login_link(self):
+        """Проверка ссылки на страницу LoginPage"""
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"

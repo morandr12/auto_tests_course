@@ -3,6 +3,12 @@
 from selenium.webdriver.common.by import By
 
 
+class BasePageLocators:
+    """Локаторы BasePage."""
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+
+
 class MainPageLocators:
     """Локаторы MainPage."""
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
