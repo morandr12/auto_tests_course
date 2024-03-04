@@ -3,6 +3,7 @@
 import pytest
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
+from .pages.basket_page import BasketPage
 from .pages.locators import ProductPageLocators
 from .pages.pages_links import PRODUCTS_PAGE_LINKS, PRODUCTS_PAGE_PROMO_LINK
 
@@ -31,6 +32,15 @@ def test_guest_can_go_to_login_page_from_product_page(browser, link):
     product_page.open().go_to_login_page()
     login_page = LoginPage(browser, browser.current_url)
     login_page.should_be_login_page()
+
+
+@pytest.mark.parametrize("link", PRODUCTS_PAGE_LINKS)
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, link):
+    """Тест перехода на страницу пустой корзины."""
+    product_page = ProductPage(browser, link)
+    product_page.open().go_to_basket_page()
+    basket_page = BasketPage(browser, browser.current_url)
+    basket_page.should_not_be_basket_formset().should_be_empty_basket_message()
 
 
 @pytest.mark.negative

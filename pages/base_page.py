@@ -62,12 +62,21 @@ class BasePage:
         except NoAlertPresentException:
             print("No second alert presented")
 
+    def should_be_login_link(self):
+        """Проверка ссылки на страницу LoginPage"""
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+
     def go_to_login_page(self):
         """Переход на страницу LoginPage"""
         login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         login_link.click()
         # return LoginPage(browser=self.browser, url=self.browser.current_url)
 
-    def should_be_login_link(self):
-        """Проверка ссылки на страницу LoginPage"""
-        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+    def should_be_basket_link(self):
+        """Проверка ссылки на страницу BasketPage"""
+        assert self.is_element_present(*BasePageLocators.BASKET_LINK), "Basket link is not presented"
+
+    def go_to_basket_page(self):
+        """Переход на страницу BasketPage"""
+        login_link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
+        login_link.click()

@@ -7,7 +7,7 @@ class BasePageLocators:
     """Локаторы BasePage."""
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
-
+    BASKET_LINK = (By.CSS_SELECTOR, "div.basket-mini a.btn")
 
 class MainPageLocators:
     """Локаторы MainPage."""
@@ -18,6 +18,12 @@ class LoginPageLocators:
     """Локаторы LoginPage."""
     LOGIN_FORM = (By.CSS_SELECTOR, "#login_form")
     REGISTER_FORM = (By.CSS_SELECTOR, "#register_form")
+
+
+class BasketPageLocators:
+    """Локаторы BasketPage."""
+    EMPTY_BASKET_MESSAGE = (By.CSS_SELECTOR, "#content_inner > p")
+    BASKET_FORMSET = (By.CSS_SELECTOR, "#content_inner > #basket_formset")
 
 
 class ProductPageLocators:
