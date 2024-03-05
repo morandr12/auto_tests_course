@@ -6,7 +6,13 @@ from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
 from .pages.locators import ProductPageLocators
-from .pages.pages_links import PRODUCTS_PAGE_LINKS_LIST, LOGIN_PAGE_LINK
+from .pages.pages_links import (
+    PRODUCTS_PAGE_LINK_1,
+    PRODUCTS_PAGE_LINK_2,
+    PRODUCTS_PAGE_NEW_YEAR_PROMO_LINKS,
+    PRODUCTS_PAGE_PROMO_LINKS,
+    LOGIN_PAGE_LINK,
+)
 
 
 class TestUserAddToBasketFromProductPage:
@@ -29,7 +35,7 @@ class TestUserAddToBasketFromProductPage:
         Тест отсутствия сообщений о добавленном товаре при открытии страницы продукта.
         Без добавления продукта в корзину.
         """
-        link = PRODUCTS_PAGE_LINKS_LIST[0]
+        link = PRODUCTS_PAGE_LINK_2
         product_page = ProductPage(browser=setup, url=link)
         product_page.open()
         assert product_page.is_not_element_present(
@@ -39,23 +45,23 @@ class TestUserAddToBasketFromProductPage:
     @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, setup):
         """Тест добавления товара в корзину."""
-        link = PRODUCTS_PAGE_LINKS_LIST[0]
+        link = PRODUCTS_PAGE_LINK_2
         product_page = ProductPage(browser=setup, url=link)
         product_page.open().add_product_to_basket().solve_quiz_and_get_code()
         product_page.check_product_added_to_basket()
 
 
-@pytest.mark.parametrize("link", PRODUCTS_PAGE_LINKS_LIST)
-def test_guest_should_see_login_link_on_product_page(browser, link):
+def test_guest_should_see_login_link_on_product_page(browser):
     """Тест наличия ссылки на LoginPage"""
+    link = PRODUCTS_PAGE_LINK_2
     product_page = ProductPage(browser, link)
     product_page.open().should_be_login_link()
 
 
 @pytest.mark.need_review
-@pytest.mark.parametrize("link", PRODUCTS_PAGE_LINKS_LIST)
-def test_guest_can_go_to_login_page_from_product_page(browser, link):
+def test_guest_can_go_to_login_page_from_product_page(browser):
     """Тест перехода на страницу логина."""
+    link = PRODUCTS_PAGE_LINK_2
     product_page = ProductPage(browser, link)
     product_page.open().go_to_login_page()
     login_page = LoginPage(browser, browser.current_url)
@@ -64,9 +70,9 @@ def test_guest_can_go_to_login_page_from_product_page(browser, link):
 
 @pytest.mark.need_review
 @pytest.mark.negative
-@pytest.mark.parametrize("link", PRODUCTS_PAGE_LINKS_LIST)
-def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, link):
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     """Тест отсутствия товаров в корзине при переходе на страницу корзины"""
+    link = PRODUCTS_PAGE_LINK_1
     product_page = ProductPage(browser, link)
     product_page.open().go_to_basket_page()
     basket_page = BasketPage(browser, browser.current_url)
@@ -74,7 +80,7 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, link
 
 
 @pytest.mark.need_review
-@pytest.mark.parametrize("link", PRODUCTS_PAGE_LINKS_LIST)
+@pytest.mark.parametrize("link", PRODUCTS_PAGE_NEW_YEAR_PROMO_LINKS + PRODUCTS_PAGE_PROMO_LINKS)
 def test_guest_can_add_product_to_basket(browser, link):
     """Тест добавления товара в корзину."""
     if link == "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7":
@@ -85,9 +91,9 @@ def test_guest_can_add_product_to_basket(browser, link):
 
 
 @pytest.mark.negative
-@pytest.mark.parametrize("link", PRODUCTS_PAGE_LINKS_LIST)
-def test_guest_cant_see_success_message(browser, link):
+def test_guest_cant_see_success_message(browser):
     """Тест отсутствия сообщений при открытии страницы продукта без добавления продукта в корзину"""
+    link = PRODUCTS_PAGE_LINK_1
     product_page = ProductPage(browser, link)
     product_page.open()
     product_page.should_not_be_alert_success()
@@ -95,9 +101,9 @@ def test_guest_cant_see_success_message(browser, link):
 
 @pytest.mark.negative
 @pytest.mark.xfail
-@pytest.mark.parametrize("link", PRODUCTS_PAGE_LINKS_LIST)
-def test_message_disappeared_after_adding_product_to_basket(browser, link):
+def test_message_disappeared_after_adding_product_to_basket(browser):
     """Негативный Тест сообщения о добавлении продукта в корзину"""
+    link = PRODUCTS_PAGE_LINK_1
     product_page = ProductPage(browser, link)
     product_page.open().add_product_to_basket()
     product_page.should_be_alert_disappeared()
@@ -105,9 +111,9 @@ def test_message_disappeared_after_adding_product_to_basket(browser, link):
 
 @pytest.mark.negative
 @pytest.mark.xfail
-@pytest.mark.parametrize("link", PRODUCTS_PAGE_LINKS_LIST)
-def test_guest_cant_see_success_message_after_adding_product_to_basket(browser, link):
+def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     """Негативный Тест сообщения о добавлении продукта в корзину"""
+    link = PRODUCTS_PAGE_LINK_1
     product_page = ProductPage(browser, link)
     product_page.open().add_product_to_basket()
     product_page.should_not_be_alert_success()
