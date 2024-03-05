@@ -5,7 +5,6 @@ import pytest
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
-from .pages.locators import ProductPageLocators
 from .pages.pages_links import (
     PRODUCTS_PAGE_LINK_1,
     PRODUCTS_PAGE_LINK_2,
@@ -38,9 +37,7 @@ class TestUserAddToBasketFromProductPage:
         link = PRODUCTS_PAGE_LINK_2
         product_page = ProductPage(browser=setup, url=link)
         product_page.open()
-        assert product_page.is_not_element_present(
-            *ProductPageLocators.ALERT_SUCCESS
-        ), "Alert-success is presented"
+        product_page.should_be_alert_success()
 
     @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, setup):
