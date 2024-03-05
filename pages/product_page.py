@@ -25,6 +25,14 @@ class ProductPage(BasePage):
         """Проверка наличия сообщения с подтверждением добавления продукта в корзину."""
         assert self.is_element_present(*ProductPageLocators.ALERT_SUCCESS), "alert-success is not presented"
 
+    def should_not_be_alert_success(self):
+        """Проверка отсутствия сообщения с подтверждением добавления продукта в корзину."""
+        assert self.is_not_element_present(*ProductPageLocators.ALERT_SUCCESS), "alert-success is presented"
+
+    def should_be_alert_disappeared(self):
+        """Проверка исчезновения сообщения с подтверждением добавления продукта в корзину."""
+        assert self.is_disappeared(*ProductPageLocators.ALERT_SUCCESS), "alert-success is presented"
+
     def should_be_alert_info(self):
         """Проверка наличия сообщения с информацией о продукте добавленном в корзину."""
         assert self.is_element_present(*ProductPageLocators.ALERT_INFO), "alert-info is not presented"
@@ -40,12 +48,12 @@ class ProductPage(BasePage):
         return self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
 
     def get_alert_success_text(self):
-        """Получение текста из сообщения с именем продукта добавленного в корзину."""
+        """Получение текста из сообщения с подтверждением добавления продукта в корзину."""
         self.should_be_alert_success()
         return self.browser.find_element(*ProductPageLocators.ALERT_SUCCESS_TXT).text
 
     def get_alert_info_text(self):
-        """Получение текста из сообщения с ценой продукта добавленного в корзину."""
+        """Получение текста из сообщения с с информацией о продукте добавленном в корзину."""
         self.should_be_alert_info()
         return self.browser.find_element(*ProductPageLocators.ALERT_INFO_TXT).text
 

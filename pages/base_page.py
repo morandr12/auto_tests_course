@@ -72,6 +72,12 @@ class BasePage:
         login_link.click()
         # return LoginPage(browser=self.browser, url=self.browser.current_url)
 
+    def should_be_authorized_user(self):
+        """Проверка, что пользователь залогинен"""
+        assert self.is_element_present(
+            *BasePageLocators.USER_ICON
+        ), "User icon is not presented, probably unauthorised user"
+
     def should_be_basket_link(self):
         """Проверка ссылки на страницу BasketPage"""
         assert self.is_element_present(*BasePageLocators.BASKET_LINK), "Basket link is not presented"
