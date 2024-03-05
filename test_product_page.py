@@ -44,7 +44,7 @@ class TestUserAddToBasketFromProductPage:
         """Тест добавления товара в корзину."""
         link = PRODUCTS_PAGE_LINK_2
         product_page = ProductPage(browser=setup, url=link)
-        product_page.open().add_product_to_basket().solve_quiz_and_get_code()
+        product_page.open().add_product_to_basket()
         product_page.check_product_added_to_basket()
 
 
